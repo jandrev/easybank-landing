@@ -1,16 +1,40 @@
 import { CSSObject, MantineTheme, MantineThemeOverride } from "@mantine/core";
 
-// Source code of MantineProvider
-// https://github.com/mantinedev/mantine/blob/master/src/mantine-styles/src/theme/MantineProvider.tsx
+type primaryColors = "darkBlue" | "limeGreen" | "lightCyan";
+type secondaryColors = "grayishBlue" | "lightGrayishBlue" | "veryLightGray";
+type weightsOptions = "sm" | "md" | "lg";
 
-// Theme
+declare module "@mantine/core" {
+  export interface MantineThemeOther {
+    primaryPalette: Record<primaryColors, string>;
+    secondaryPalette: Record<secondaryColors, string>;
+    weights: Record<weightsOptions, number>;
+  }
+}
+
 export const customTheme: MantineThemeOverride = {
   primaryColor: "dark",
-  fontFamily: "Inter, sans-serif",
-  headings: { fontFamily: "Inter, sans-serif" },
+  fontFamily: "Public Sans, sans-serif",
+  headings: { fontFamily: "Public Sans, sans-serif", fontWeight: 700 },
+  other: {
+    primaryPalette: {
+      darkBlue: "#2d314d",
+      limeGreen: "#31d35c",
+      lightCyan: "#2bb7da",
+    },
+    secondaryPalette: {
+      grayishBlue: "#9698a6",
+      lightGrayishBlue: "#f3f4f6",
+      veryLightGray: "#fafafa",
+    },
+    weights: {
+      sm: 300,
+      md: 400,
+      lg: 700,
+    },
+  },
 };
 
-// Default Props
 type MantineDefaultProps = Record<string, Record<string, any>>;
 
 export const customDefaultProps: MantineDefaultProps = {};

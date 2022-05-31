@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MenuContext } from "@core/context/MenuContext";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 import { GetServerSidePropsContext } from "next";
@@ -10,13 +11,14 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
-import { customDefaultProps, customStyles, customTheme } from "@/core/mantine";
+import { customDefaultProps, customStyles, customTheme } from "@core/mantine";
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
   const [colorScheme, setColorScheme] = useState<ColorScheme>(
     props.colorScheme
   );
+  const [opened, setOpened] = useState(false);
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =
@@ -35,7 +37,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.png" />
       </Head>
 
       <ColorSchemeProvider
@@ -49,7 +51,9 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           styles={customStyles}
           defaultProps={customDefaultProps}
         >
-          <Component {...pageProps} />
+          <MenuContext.Provider value={{ opened, setOpened }}>
+            <Component {...pageProps} />
+          </MenuContext.Provider>
         </MantineProvider>
       </ColorSchemeProvider>
     </>
